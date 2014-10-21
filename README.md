@@ -123,8 +123,6 @@ UnaryExpression : delete UnaryExpression
   - Return the result of calling the DeleteBinding concrete method of *bindings*, providing
     GetReferencedName(*ref*) as the argument.
 
-## Syntax ##
-
 The only way to create a reference whose *referenced name* is neither a String nor a Symbol is
 by using the "abstract reference" operator:
 
