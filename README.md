@@ -143,17 +143,6 @@ MemberExpression[Yield] :
 - Return a value of type Reference whose base value is *bv* and whose referenced name is
   *nameValue*, and whose strict reference flag is *strict*.
 
-```
-SuperProperty[Yield] :
-    super :: IdentifierReference[?Yield]
-```
-
-- Let *nameValue* be the result of evaluating *IdentifierReference*.
-- ReturnIfAbrupt(*nameValue*).
-- If the code matched by the syntactic production that is being evaluated is strict mode code,
-  let *strict* be **true**, else let *strict* be **false**.
-- Return MakeSuperPropertyReference(*nameValue*, *strict*).
-
 ## Extensions to Built-In Types ##
 
 The built-in types are extended as follows:
