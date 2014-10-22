@@ -42,7 +42,7 @@ We introduce three new built-in symbols:
 We introduce a new abstract operation:
 
 - **IsAbstractReference(V)**.  Returns **true** if the *referenced name* component of the reference *V*
-  is neither a primative String nor a Symbol.
+  is neither a primitive String nor a Symbol.
 
 The abstract operation **GetValue** becomes:
 
@@ -131,11 +131,10 @@ MemberExpression[Yield] :
     MemberExpression[?Yield] :: IdentifierReference[?Yield]
 ```
 
-- Let *baseReference* be the result of evaluating *IdentifierReference*.
+- Let *baseReference* be the result of evaluating *MemberExpression*.
 - Let *baseValue* be GetValue(*baseReference*).
 - ReturnIfAbrupt(*baseValue*).
-- Let *propertyNameReference* be the result of evaluating *Expression*.
-- Let *propertyNameValue* be GetValue(*propertyNameReference*).
+- Let *propertyNameValue* be the result of evaluating *IdentifierReference*.
 - ReturnIfAbrupt(*propertyNameValue*).
 - Let *bv* be RequireObjectCoercible(*baseValue*).
 - ReturnIfAbrupt(*bv*).
@@ -149,8 +148,8 @@ SuperProperty[Yield] :
     super :: IdentifierReference[?Yield]
 ```
 
-- Let *propertyNameReference* be the result of evaluating *IdentifierReference*.
-- Let *propertyNameValue* be GetValue(*propertyNameReference*).
+- Let *propertyNameValue* be the result of evaluating *IdentifierReference*.
+- ReturnIfAbrupt(*propertyNameValue*).
 - If the code matched by the syntactic production that is being evaluated is strict mode code,
   let *strict* be **true**, else let *strict* be **false**.
 - Return MakeSuperPropertyReference(*propertyNameValue*, *strict*).
@@ -168,16 +167,16 @@ Function.prototype[Symbol.referenceGet] = function(base) { return this };
 ```
 
 ```js
-
 function mapGetInherited(base) {
 
     while (base !== null) {
-        if (this.has(base)) {
+
+        if (this.has(base))
             return this.get(base);
-        }
+
         base = Object.getPrototypeOf(base);
-      }
     }
+
     return void 0;
 }
 
@@ -188,7 +187,6 @@ Map.prototype[Symbol.referenceDelete] = Map.prototype.delete;
 WeakMap.prototype[Symbol.referenceGet] = mapGetInherited;
 WeakMap.prototype[Symbol.referenceSet] = WeakMap.prototype.set;
 WeakMap.prototype[Symbol.referenceDelete] = WeakMap.prototype.delete;
-
 ```
 
 
@@ -197,21 +195,18 @@ WeakMap.prototype[Symbol.referenceDelete] = WeakMap.prototype.delete;
 Using an iterator library implemented as a module:
 
 ```js
-
 import { map, takeWhile, forEach } from "iterlib";
 
 getPlayers()
 ::map(x => x.character())
 ::takeWhile(x => x.strength > 100)
 ::forEach(x => console.log(x));
-
 ```
 
 Using WeakMaps to implement private fields:
 
 
 ```js
-
 const _x = new WeakMap,
       _y = new WeakMap;
 
