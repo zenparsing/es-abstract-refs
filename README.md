@@ -107,13 +107,14 @@ UnaryExpression : delete UnaryExpression
   - Return **true**.
 - If IsPropertyReference(*ref*) is **true**, then
     - If IsSuperReference(*ref*), then throw a **ReferenceError** exception.
+    - Let *base* be ToObject(GetBase(*ref*))
     - If IsAbstractReference(*ref*) is **true**, then
       - Let *nameObject* be GetReferencedName(*V*)
       - Let *result* be Invoke(*nameObject*, **@@referenceDelete**, (*base*))
       - Return **true**.
     - Else
       - Let *deleteStatus* be the result of calling the [[Delete]] internal method on
-        ToObject(GetBase(*ref*)), providing GetReferencedName(*ref*) as the argument.
+        *base*, providing GetReferencedName(*ref*) as the argument.
       - ReturnIfAbrupt(*deleteStatus*).
       - If *deleteStatus* is **false** and IsStrictReference(*ref*) is **true**, then throw a **TypeError**
         exception.
