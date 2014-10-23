@@ -30,6 +30,8 @@ This proposal also provides a solution to the "private fields" problem.
 This work was inspired by [relationships](http://wiki.ecmascript.org/doku.php?id=strawman:relationships)
 and is intended to supersede it.
 
+*A prototype implementation of this feature is available in [es6now](https://github.com/zenparsing/es6now)*.
+
 
 ## Specification ##
 
