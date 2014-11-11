@@ -163,14 +163,14 @@ WeakMap.prototype[Symbol.referenceSet] = WeakMap.prototype.set;
 WeakMap.prototype[Symbol.referenceDelete] = WeakMap.prototype.delete;
 ```
 
-In addition, a new constructor named **PrivateField** is added to the global object.
-The behavior of **PrivateField** objects are identical to **WeakMap** objects, with the
-exception that **PrivateField.prototype** does not contain a **clear** method.
+In addition, a new constructor named **PrivateMap** is added to the global object.
+The behavior of **PrivateMap** objects are identical to **WeakMap** objects, with the
+exception that **PrivateMap.prototype** does not contain a **clear** method.
 
-The primary motivation for introducing the **PrivateField** constructor is to allow
+The primary motivation for introducing the **PrivateMap** constructor is to allow
 the user to provide alternate garbage collection semantics.  It is expected that the
-reachability of a value within a **PrivateField** key/value pair is independent of the
-lifetime of the **PrivateField** object.
+reachability of a value within a **PrivateMap** key/value pair is independent of the
+lifetime of the **PrivateMap** object.
 
 
 ## Examples ##
@@ -186,12 +186,12 @@ getPlayers()
 ::forEach(x => console.log(x));
 ```
 
-Using **PrivateField** objects to implement private object state:
+Using **PrivateMap** objects to implement private object state:
 
 
 ```js
-const _x = new PrivateField,
-      _y = new PrivateField;
+const _x = new PrivateMap,
+      _y = new PrivateMap;
 
 class Point {
 
@@ -214,7 +214,7 @@ The above implementation of private object state suggests the following syntacti
 
 ```js
 
-private _x, _y; // => const _x = new PrivateField, _y = new PrivateField;
+private _x, _y; // => const _x = new PrivateMap, _y = new PrivateMap;
 
 class Point {
 
