@@ -151,34 +151,26 @@ MemberExpression[Yield] :
 
 The built-in types are extended as follows:
 
-*The methods below are implemented in ECMAScript for convenience.*
-
 ```js
 Function.prototype[Symbol.referenceGet] = function(base) { return this };
-```
 
-```js
-function mapGetInherited(base) {
-
-    while (base !== null) {
-
-        if (this.has(base))
-            return this.get(base);
-
-        base = Object.getPrototypeOf(base);
-    }
-
-    return void 0;
-}
-
-Map.prototype[Symbol.referenceGet] = mapGetInherited;
+Map.prototype[Symbol.referenceGet] = Map.prototype.get;
 Map.prototype[Symbol.referenceSet] = Map.prototype.set;
 Map.prototype[Symbol.referenceDelete] = Map.prototype.delete;
 
-WeakMap.prototype[Symbol.referenceGet] = mapGetInherited;
+WeakMap.prototype[Symbol.referenceGet] = WeakMap.prototype.get;
 WeakMap.prototype[Symbol.referenceSet] = WeakMap.prototype.set;
 WeakMap.prototype[Symbol.referenceDelete] = WeakMap.prototype.delete;
 ```
+
+In addition, a new constructor named **PrivateField** is added to the global object.
+The behavior of **PrivateField** objects are identical to **WeakMap** objects, with the
+exception that **PrivateField.prototype** does not contain a **clear** method.
+
+The primary motivation for introducing the **PrivateField** constructor is to allow
+the user to provide alternate garbage collection semantics.  It is expected that the
+reachability of a value within a **PrivateField** key/value pair is independent of the
+lifetime of the **PrivateField** object.
 
 
 ## Examples ##
@@ -194,12 +186,12 @@ getPlayers()
 ::forEach(x => console.log(x));
 ```
 
-Using WeakMaps to implement private fields:
+Using **PrivateField** objects to implement private object state:
 
 
 ```js
-const _x = new WeakMap,
-      _y = new WeakMap;
+const _x = new PrivateField,
+      _y = new PrivateField;
 
 class Point {
 
@@ -216,3 +208,17 @@ class Point {
 }
 ```
 
+## Extensions ##
+
+The above implementation of private object state suggests the following syntactic sugar:
+
+```js
+
+private _x, _y; // => const _x = new PrivateField, _y = new PrivateField;
+
+class Point {
+
+    // ...
+}
+
+```
