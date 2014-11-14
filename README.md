@@ -208,7 +208,7 @@ class Point {
 }
 ```
 
-## Extensions ##
+## Private Declaration Syntax ##
 
 The above implementation of private object state suggests the following syntactic sugar:
 
