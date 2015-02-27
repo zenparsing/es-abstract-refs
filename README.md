@@ -1,5 +1,10 @@
 # Abstract References for ECMAScript #
 
+**This proposal has been superseded by the following two proposals:**
+
+- [Function Bind Operator](https://github.com/zenparsing/es-function-bind)
+- [Private Fields](https://github.com/zenparsing/es-private-fields)
+
 ## Overview and Motivation ##
 
 Despite its functional programming facilities, ECMAScript exhibits a strong preference
